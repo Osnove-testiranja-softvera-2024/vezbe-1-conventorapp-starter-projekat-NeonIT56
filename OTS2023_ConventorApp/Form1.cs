@@ -15,14 +15,21 @@ namespace OTS2023_ConventorApp
         public Form1()
         {
             InitializeComponent();
-            radioButton1.Checked = true;
+            if(radioMass.Checked)
+                groupBox3.Visible = true;
         }
-            
-        private void button1_Click(object sender, EventArgs e)
+
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = "";
+            textBox2.Text = "";
+        }
+
+        private void buttonConvert_Click(object sender, EventArgs e)
         {
             try
             {
-                if (radioButton1.Checked )
+                if (radioMass.Checked )
                 {
                     Mass mass = new Mass();
                     if (textBox1.Text == "")
@@ -34,7 +41,7 @@ namespace OTS2023_ConventorApp
                         textBox2.Text = Convert.ToString(mass.ConvertMass(textBox1.Text, textBox2.Text));
                     }
                 }
-                else if (radioButton2.Checked )
+                else if (radioLength.Checked )
                 {
                     Length length = new Length();
                     if (textBox1.Text == "")
@@ -53,28 +60,39 @@ namespace OTS2023_ConventorApp
                 throw;
             }
         }
-
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        private void radioMass_CheckedChanged(object sender, EventArgs e)
         {
+            groupBox3.Visible = true;
+            groupBox2.Visible = false;
             label1.Text = "Pounds";
             label2.Text = "Kilograms";
             textBox1.Text = "";
             textBox2.Text = "";
         }
 
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        private void radioLength_CheckedChanged(object sender, EventArgs e)
         {
+            groupBox3.Visible = true;
+            groupBox2.Visible = false;
             label1.Text = "Feet";
             label2.Text = "Meters";
             textBox1.Text = "";
             textBox2.Text = "";
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void radioTime_CheckedChanged(object sender, EventArgs e)
         {
-            textBox1.Text = "";
-            textBox2.Text = "";
+            groupBox3.Visible = false;
+            groupBox2.Visible = true;
         }
+
+        private void radioMoney_CheckedChanged(object sender, EventArgs e)
+        {
+            groupBox3.Visible = true;
+            groupBox2.Visible = false;
+        }
+
+
     }
 
     public class Mass
