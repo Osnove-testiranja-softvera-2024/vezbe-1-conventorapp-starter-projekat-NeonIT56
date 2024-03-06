@@ -27,17 +27,24 @@ namespace OTS2023_ConventorApp
                     Mass mass = new Mass();
                     if (textBox1.Text == "")
                     {
-                       textBox1.Text = Convert.ToString(mass.ConvertMass(textBox1.Text, textBox2.Text)); //Convert kg to pounds
+                       textBox1.Text = Convert.ToString(mass.ConvertMass(textBox1.Text, textBox2.Text));
                     }
                     else if (textBox2.Text == "")
                     {
-                        textBox2.Text = Convert.ToString(mass.ConvertMass(textBox1.Text, textBox2.Text)); //Convert pounds to kg
+                        textBox2.Text = Convert.ToString(mass.ConvertMass(textBox1.Text, textBox2.Text));
                     }
                 }
                 else if (radioButton2.Checked )
                 {
                     Length length = new Length();
-                    length.ConvertLength(textBox1.Text, textBox2.Text);
+                    if (textBox1.Text == "")
+                    {
+                        textBox1.Text = Convert.ToString(length.ConvertLength(textBox1.Text, textBox2.Text));
+                    }
+                    else if (textBox2.Text == "")
+                    {
+                        textBox2.Text = Convert.ToString(length.ConvertLength(textBox1.Text, textBox2.Text));
+                    }
                 }
             }
             catch (Exception)
@@ -45,11 +52,6 @@ namespace OTS2023_ConventorApp
 
                 throw;
             }
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -64,6 +66,12 @@ namespace OTS2023_ConventorApp
         {
             label1.Text = "Feet";
             label2.Text = "Meters";
+            textBox1.Text = "";
+            textBox2.Text = "";
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
             textBox1.Text = "";
             textBox2.Text = "";
         }
@@ -88,13 +96,12 @@ namespace OTS2023_ConventorApp
                 {
                     return Convert.ToDouble(text1) / 2.205; //Convert pounds to kg
                 }
-                return 0;
-
             }
-            catch (Exception)
+            catch (FormatException)
             {
-                throw;
+                MessageBox.Show("Invalid values, please enter numbers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            return 0;
         }
     }
 
@@ -105,9 +112,26 @@ namespace OTS2023_ConventorApp
 
         }
 
-        internal void ConvertLength(string text1, string text2)
+        internal double ConvertLength(string text1, string text2)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (text1 == "")
+                {
+                    return Convert.ToDouble(text2) * 3.281; //Convert meters to feet
+                }
+                else if (text2 == "")
+                {
+                    return Convert.ToDouble(text1) / 3.281; //Convert feet to meters
+                }
+                return 0;
+
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Invalid values, please enter numbers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return 0;
         }
     }
 }
