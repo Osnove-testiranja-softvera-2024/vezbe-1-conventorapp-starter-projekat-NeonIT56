@@ -62,7 +62,7 @@ namespace OTS2023_ConventorApp
             else if (radioCustom.Checked)
             {
                 CustomMoneyConverter customMoney = new CustomMoneyConverter();
-                customMoney.ConvertCustomMoney(textBox1.Text);
+                textBox2.Text = customMoney.ConvertCustomMoney(textBox1.Text);
             }
 
         }
@@ -123,6 +123,7 @@ namespace OTS2023_ConventorApp
 
         private void radioCustom_CheckedChanged(object sender, EventArgs e)
         {
+            groupSegmentType.Visible = false;
             label1.Text = "Custom expression";
             label2.Text = "Result";
             textBox1.Text = "";
