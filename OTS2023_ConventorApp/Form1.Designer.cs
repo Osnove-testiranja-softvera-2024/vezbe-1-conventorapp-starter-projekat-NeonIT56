@@ -39,21 +39,21 @@
             this.radioTime = new System.Windows.Forms.RadioButton();
             this.radioMoney = new System.Windows.Forms.RadioButton();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
+            this.groupTimeOutput = new System.Windows.Forms.GroupBox();
+            this.radioSeconds = new System.Windows.Forms.RadioButton();
             this.radioMinutes = new System.Windows.Forms.RadioButton();
             this.radioHours = new System.Windows.Forms.RadioButton();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupSegmentType = new System.Windows.Forms.GroupBox();
             this.radioArray = new System.Windows.Forms.RadioButton();
             this.radioSingle = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.groupTimeOutput.SuspendLayout();
+            this.groupSegmentType.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(242, 167);
+            this.textBox1.Location = new System.Drawing.Point(265, 167);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(140, 20);
             this.textBox1.TabIndex = 0;
@@ -135,6 +135,7 @@
             this.radioCustom.TabStop = true;
             this.radioCustom.Text = "Custom money";
             this.radioCustom.UseVisualStyleBackColor = true;
+            this.radioCustom.CheckedChanged += new System.EventHandler(this.radioCustom_CheckedChanged);
             // 
             // radioTime
             // 
@@ -163,34 +164,35 @@
             // textBox2
             // 
             this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(242, 210);
+            this.textBox2.Location = new System.Drawing.Point(265, 207);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(140, 20);
             this.textBox2.TabIndex = 7;
             // 
-            // groupBox2
+            // groupTimeOutput
             // 
-            this.groupBox2.Controls.Add(this.radioButton5);
-            this.groupBox2.Controls.Add(this.radioMinutes);
-            this.groupBox2.Controls.Add(this.radioHours);
-            this.groupBox2.Location = new System.Drawing.Point(265, 34);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 100);
-            this.groupBox2.TabIndex = 9;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Time output";
-            this.groupBox2.Visible = false;
+            this.groupTimeOutput.Controls.Add(this.radioSeconds);
+            this.groupTimeOutput.Controls.Add(this.radioMinutes);
+            this.groupTimeOutput.Controls.Add(this.radioHours);
+            this.groupTimeOutput.Location = new System.Drawing.Point(265, 34);
+            this.groupTimeOutput.Name = "groupTimeOutput";
+            this.groupTimeOutput.Size = new System.Drawing.Size(200, 100);
+            this.groupTimeOutput.TabIndex = 9;
+            this.groupTimeOutput.TabStop = false;
+            this.groupTimeOutput.Text = "Time output";
+            this.groupTimeOutput.Visible = false;
             // 
-            // radioButton5
+            // radioSeconds
             // 
-            this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(26, 68);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(85, 17);
-            this.radioButton5.TabIndex = 2;
-            this.radioButton5.TabStop = true;
-            this.radioButton5.Text = "radioButton5";
-            this.radioButton5.UseVisualStyleBackColor = true;
+            this.radioSeconds.AutoSize = true;
+            this.radioSeconds.Location = new System.Drawing.Point(26, 68);
+            this.radioSeconds.Name = "radioSeconds";
+            this.radioSeconds.Size = new System.Drawing.Size(67, 17);
+            this.radioSeconds.TabIndex = 2;
+            this.radioSeconds.TabStop = true;
+            this.radioSeconds.Text = "Seconds";
+            this.radioSeconds.UseVisualStyleBackColor = true;
+            this.radioSeconds.CheckedChanged += new System.EventHandler(this.radioSeconds_CheckedChanged);
             // 
             // radioMinutes
             // 
@@ -202,6 +204,7 @@
             this.radioMinutes.TabStop = true;
             this.radioMinutes.Text = "Minutes";
             this.radioMinutes.UseVisualStyleBackColor = true;
+            this.radioMinutes.CheckedChanged += new System.EventHandler(this.radioMinutes_CheckedChanged);
             // 
             // radioHours
             // 
@@ -213,18 +216,19 @@
             this.radioHours.TabStop = true;
             this.radioHours.Text = "Hours";
             this.radioHours.UseVisualStyleBackColor = true;
+            this.radioHours.CheckedChanged += new System.EventHandler(this.radioHours_CheckedChanged);
             // 
-            // groupBox3
+            // groupSegmentType
             // 
-            this.groupBox3.Controls.Add(this.radioArray);
-            this.groupBox3.Controls.Add(this.radioSingle);
-            this.groupBox3.Location = new System.Drawing.Point(480, 34);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(200, 100);
-            this.groupBox3.TabIndex = 10;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Segment type";
-            this.groupBox3.Visible = false;
+            this.groupSegmentType.Controls.Add(this.radioArray);
+            this.groupSegmentType.Controls.Add(this.radioSingle);
+            this.groupSegmentType.Location = new System.Drawing.Point(480, 34);
+            this.groupSegmentType.Name = "groupSegmentType";
+            this.groupSegmentType.Size = new System.Drawing.Size(200, 100);
+            this.groupSegmentType.TabIndex = 10;
+            this.groupSegmentType.TabStop = false;
+            this.groupSegmentType.Text = "Segment type";
+            this.groupSegmentType.Visible = false;
             // 
             // radioArray
             // 
@@ -253,8 +257,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(721, 358);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupSegmentType);
+            this.Controls.Add(this.groupTimeOutput);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label2);
@@ -265,10 +269,10 @@
             this.Text = "Form1";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.groupTimeOutput.ResumeLayout(false);
+            this.groupTimeOutput.PerformLayout();
+            this.groupSegmentType.ResumeLayout(false);
+            this.groupSegmentType.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -284,14 +288,14 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.RadioButton radioButton5;
+        private System.Windows.Forms.GroupBox groupTimeOutput;
+        private System.Windows.Forms.RadioButton radioSeconds;
         private System.Windows.Forms.RadioButton radioMinutes;
         private System.Windows.Forms.RadioButton radioHours;
         private System.Windows.Forms.RadioButton radioCustom;
         private System.Windows.Forms.RadioButton radioTime;
         private System.Windows.Forms.RadioButton radioMoney;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupSegmentType;
         private System.Windows.Forms.RadioButton radioArray;
         private System.Windows.Forms.RadioButton radioSingle;
     }
