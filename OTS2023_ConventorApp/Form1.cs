@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OTS2023_ConventorApp.Classes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,48 +18,30 @@ namespace OTS2023_ConventorApp
             InitializeComponent();
             if(radioMass.Checked)
                 groupBox3.Visible = true;
-        }
-
-        private void buttonClear_Click(object sender, EventArgs e)
-        {
-            textBox1.Text = "";
-            textBox2.Text = "";
+                label1.Text = "Pounds";
+                label2.Text = "Kilograms";
+                radioSingle.Checked = true;
         }
 
         private void buttonConvert_Click(object sender, EventArgs e)
         {
-            try
+            if (radioMass.Checked )
             {
-                if (radioMass.Checked )
-                {
-                    Mass mass = new Mass();
-                    if (textBox1.Text == "")
-                    {
-                       textBox1.Text = Convert.ToString(mass.ConvertMass(textBox1.Text, textBox2.Text));
-                    }
-                    else if (textBox2.Text == "")
-                    {
-                        textBox2.Text = Convert.ToString(mass.ConvertMass(textBox1.Text, textBox2.Text));
-                    }
-                }
-                else if (radioLength.Checked )
-                {
-                    Length length = new Length();
-                    if (textBox1.Text == "")
-                    {
-                        textBox1.Text = Convert.ToString(length.ConvertLength(textBox1.Text, textBox2.Text));
-                    }
-                    else if (textBox2.Text == "")
-                    {
-                        textBox2.Text = Convert.ToString(length.ConvertLength(textBox1.Text, textBox2.Text));
-                    }
-                }
+                MassConverter mass = new MassConverter();
+                if (radioSingle.Checked) 
+                    textBox2.Text = mass.Convert(textBox1.Text);
+                else if (radioArray.Checked)
+                    textBox2.Text = mass.Convert(ConvertList.ConvertFromList(textBox1.Text).ToString());
             }
-            catch (Exception)
+            else if (radioLength.Checked )
             {
+                LengthConverter length = new LengthConverter();
+                if (radioSingle.Checked)
+                    textBox2.Text = length.Convert(textBox1.Text);
+                else if (radioArray.Checked)
+                    textBox2.Text = length.Convert(ConvertList.ConvertFromList(textBox1.Text).ToString());
+            }
 
-                throw;
-            }
         }
         private void radioMass_CheckedChanged(object sender, EventArgs e)
         {
@@ -84,72 +67,20 @@ namespace OTS2023_ConventorApp
         {
             groupBox3.Visible = false;
             groupBox2.Visible = true;
+            label1.Text = "Days";
+            label2.Text = "Meters";
+            textBox1.Text = "";
+            textBox2.Text = "";
         }
 
         private void radioMoney_CheckedChanged(object sender, EventArgs e)
         {
             groupBox3.Visible = true;
             groupBox2.Visible = false;
-        }
-
-
-    }
-
-    public class Mass
-    {
-        public Mass()
-        {
-
-        }
-
-        internal double ConvertMass(string text1, string text2)
-        {
-            try
-            {
-                if(text1 == "")
-                {
-                    return Convert.ToDouble(text2) * 2.205; //Convert kg to pounds
-                }
-                else if (text2 == "")
-                {
-                    return Convert.ToDouble(text1) / 2.205; //Convert pounds to kg
-                }
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show("Invalid values, please enter numbers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            return 0;
-        }
-    }
-
-    public class Length
-    {
-        public Length()
-        {
-
-        }
-
-        internal double ConvertLength(string text1, string text2)
-        {
-            try
-            {
-                if (text1 == "")
-                {
-                    return Convert.ToDouble(text2) * 3.281; //Convert meters to feet
-                }
-                else if (text2 == "")
-                {
-                    return Convert.ToDouble(text1) / 3.281; //Convert feet to meters
-                }
-                return 0;
-
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show("Invalid values, please enter numbers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            return 0;
+            label1.Text = "Euro";
+            label2.Text = "Rsd";
+            textBox1.Text = "";
+            textBox2.Text = "";
         }
     }
 }
