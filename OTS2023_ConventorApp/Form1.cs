@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,48 +17,63 @@ namespace OTS2023_ConventorApp
         public Form1()
         {
             InitializeComponent();
-            if(radioMass.Checked)
+            if (radioMass.Checked) { 
                 groupSegmentType.Visible = true;
                 label1.Text = "Pounds";
                 label2.Text = "Kilograms";
                 radioSingle.Checked = true;
+            }
         }
 
         private void buttonConvert_Click(object sender, EventArgs e)
         {
-            if (radioMass.Checked )
+            if (radioMass.Checked)
             {
                 MassConverter mass = new MassConverter();
-                if (radioSingle.Checked) 
+                if (radioSingle.Checked && IsValidSingleInput(textBox1.Text))
                     textBox2.Text = mass.Convert(textBox1.Text);
                 else if (radioArray.Checked)
                     textBox2.Text = mass.Convert(ConvertList.ConvertFromList(textBox1.Text).ToString());
+                else
+                    radioSingleWithMultipleValues_Error();
             }
-            else if (radioLength.Checked )
+            else if (radioLength.Checked)
             {
                 LengthConverter length = new LengthConverter();
-                if (radioSingle.Checked)
+                if (radioSingle.Checked && IsValidSingleInput(textBox1.Text))
                     textBox2.Text = length.Convert(textBox1.Text);
                 else if (radioArray.Checked)
                     textBox2.Text = length.Convert(ConvertList.ConvertFromList(textBox1.Text).ToString());
+                else
+                    radioSingleWithMultipleValues_Error();
             }
-            else if (radioTime.Checked)
-            {
-                TimeConverter time = new TimeConverter();
-                if (radioHours.Checked)
-                    textBox2.Text = time.ConvertHours(Double.Parse(textBox1.Text)).ToString();
-                else if (radioMinutes.Checked)
-                    textBox2.Text = time.ConvertMinutes(Double.Parse(textBox1.Text)).ToString();
-                else if (radioSeconds.Checked)
-                    textBox2.Text = time.ConvertSeconds(Double.Parse(textBox1.Text)).ToString();
-            }
-            else if (radioMoney.Checked)
+            else if (radioMoney.Checked && IsValidSingleInput(textBox1.Text))
             {
                 MoneyConverter money = new MoneyConverter();
                 if (radioSingle.Checked)
                     textBox2.Text = money.Convert(textBox1.Text);
                 else if (radioArray.Checked)
                     textBox2.Text = money.Convert(ConvertList.ConvertFromList(textBox1.Text).ToString());
+                else
+                    radioSingleWithMultipleValues_Error();
+            }
+            else if (radioTime.Checked)
+            {
+                TimeConverter time = new TimeConverter();
+                if (IsValidSingleInput(textBox1.Text))
+                {
+                    double value = double.Parse(textBox1.Text);
+                    if (radioHours.Checked)
+                        textBox2.Text = time.ConvertHours(value).ToString();
+                    else if (radioMinutes.Checked)
+                        textBox2.Text = time.ConvertMinutes(value).ToString();
+                    else if (radioSeconds.Checked)
+                        textBox2.Text = time.ConvertSeconds(value).ToString();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid input. Please provide a valid numerical value.");
+                }
             }
             else if (radioCustom.Checked)
             {
@@ -98,17 +114,17 @@ namespace OTS2023_ConventorApp
 
         private void radioHours_CheckedChanged(object sender, EventArgs e)
         {
-                label2.Text = radioHours.Text;
+            label2.Text = radioHours.Text;
         }
 
         private void radioMinutes_CheckedChanged(object sender, EventArgs e)
         {
-                label2.Text = radioMinutes.Text;
+            label2.Text = radioMinutes.Text;
         }
 
         private void radioSeconds_CheckedChanged(object sender, EventArgs e)
-        { 
-                label2.Text = radioSeconds.Text;
+        {
+            label2.Text = radioSeconds.Text;
         }
 
         private void radioMoney_CheckedChanged(object sender, EventArgs e)
@@ -128,6 +144,17 @@ namespace OTS2023_ConventorApp
             label2.Text = "Result";
             textBox1.Text = "";
             textBox2.Text = "";
+        }
+
+        private bool IsValidSingleInput(string input)
+        {
+            double value;
+            return double.TryParse(input, NumberStyles.Any, CultureInfo.InvariantCulture, out value);
+        }
+
+        private void radioSingleWithMultipleValues_Error()
+        {
+            MessageBox.Show("Invalid input format. Please enter a single number (e.g., 'n' or 'n.n') or turn on the 'Array of values' option.");
         }
     }
 }
